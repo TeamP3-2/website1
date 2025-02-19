@@ -70,8 +70,8 @@ a:hover {
 }
 
 .course-card {
-    background: rgba(255, 255, 255, 0.2); /* لون شفاف يتناسق مع الخلفية */
-    color: #fff;  
+    background: linear-gradient(-45deg, #33aeff, #f1f1f1, #f1f1f1, #f1f1f1);
+    color: #343434;  
     border-radius: 15px;
     padding: 20px;
     width: 280px;
@@ -112,4 +112,34 @@ a:hover {
 
 .enroll-btn:hover {
     background: #1b69c2;
+}
+/* ✅ تنسيق شريط البحث */
+.search-section {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#searchInput {
+    width: 60%;
+    padding: 10px;
+    font-size: 18px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    outline: none;
+    text-align: right; 
+    color: #000000; 
+    background-color: #368dd8;
+    transition: 0.3s;
+}
+
+#searchInput:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0, 91, 187, 0.5);
+    color: #000000; 
+    background-color: #ffffff; 
+}
+
+#searchInput::placeholder {
+    color: #80bfff; 
+    text-align: right; 
 }

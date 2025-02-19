@@ -1,3 +1,4 @@
+let allCourses = []; // تخزين جميع الدورات عند التحميل
 document.addEventListener("DOMContentLoaded", function() {
     let preferencesForm = document.getElementById("coursesContainer");
     let loginForm = document.getElementById("loginForm");
@@ -31,30 +32,20 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+
     if (preferencesForm) {
         fetch("http://localhost:3000/api/course")
         .then(response => response.json())
         .then(courses => {
-            let coursesHTML = "";
-            
-            courses.slice(0, 6).forEach(course => {
-                coursesHTML += `
-                    <div class="course-card">
-                        <h3>${course.title}</h3>
-                        <p>${course.description}</p>
-                        <p><strong>المدة:</strong> ${course.duration}</p>
-                        <p><strong>المدرب:</strong> ${course.instructor}</p>
-                        <p><strong>السعر:</strong> ${course.price}</p>
-                        <button class="enroll-btn">التسجيل</button>
-                    </div>
-                `;
-            });
-
-            coursesContainer.innerHTML = coursesHTML;
+            allCourses = courses; // تخزين الدورات عند التحميل
+            displayCourses(allCourses); // عرض جميع الدورات في البداية
         })
         .catch(error => console.error("❌ Error fetching courses:", error));
     }
+    
+    // دالة لعرض الدورات بناءً على القائمة المعطاة
 
+    
     if (loginForm) {
         loginForm.addEventListener("submit", function(event) {
             event.preventDefault();
@@ -94,3 +85,33 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
+    function displayCourses(courses) {
+        let coursesContainer = document.getElementById("coursesContainer");
+        let coursesHTML = "";
+    
+        courses.slice(0, 6).forEach(course => {
+            coursesHTML += `
+                <div class="course-card">
+                    <h3>${course.title}</h3>
+                    <p>${course.description}</p>
+                    <p><strong>المدة:</strong> ${course.duration}</p>
+                    <p><strong>المدرب:</strong> ${course.instructor}</p>
+                    <p><strong>السعر:</strong> ${course.price}</p>
+                    <button class="enroll-btn">التسجيل</button>
+                </div>
+            `;
+        });
+    
+        coursesContainer.innerHTML = coursesHTML;
+    }
+    
+    // دالة البحث عن الدورات
+    function searchCourses() {
+        let input = document.getElementById("searchInput").value.toLowerCase();
+        let filteredCourses = allCourses.filter(course => 
+            course.title.toLowerCase().includes(input) || 
+            course.description.toLowerCase().includes(input)
+        );
+    
+        displayCourses(filteredCourses); // عرض النتائج المطابقة فقط
+    }

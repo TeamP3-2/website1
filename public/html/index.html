@@ -2,8 +2,8 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
+    <title> مساري - الرئيسية</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚀 مساري - الرئيسية</title>
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/body.css">
@@ -11,8 +11,10 @@
 </head>
 <body>
     <link href="https://fonts.googleapis.com/css2?family=Kufam:wght@400;700&family=Tajawal:wght@400;700&family=Exo+2:wght@400;700&family=Chakra+Petch:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <header>
+        
             <div class="header-box">
                 <div class="logo-container">
                     <img src="../image/dd.png" alt="Logo">
@@ -35,8 +37,15 @@
     </header>
 
     <main>
-        <section class="courses-section">
-            <h2>📚 الكورسات المتاحة</h2>
+
+        <section class="search-section">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="searchInput" placeholder="ابحث عن دورة..." onkeyup="searchCourses()">
+        </section>
+        
+        <!-- عنوان الكورسات مع أيقونة حديثة -->
+        <h2><i class="fa-solid fa-book-open"></i> الكورسات المتاحة</h2>
+        
             <div id="coursesContainer" class="courses-container"></div>
         </section>
         
