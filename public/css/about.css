@@ -1,0 +1,111 @@
+
+.about h2 {
+    color: #ffffff; 
+    font-size: 28px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+
+
+
+.courses-section h2 {
+    text-align: right;
+    direction: rtl; 
+}
+.courses h2 {
+    text-align: right;
+    direction: rtl;
+}
+.team {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.team-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* البطاقة الرئيسية للفريق */
+.team-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    width: 420px; /* جعلها أوسع */
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease-in-out;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.team-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.team-card h3 {
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.team-card p {
+    color: #ddd;
+    font-size: 14px;
+}
+
+/* تنسيق الفريق الفرعي */
+.sub-team {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap; /* يسمح للباقات بالنزول عند الحاجة */
+}
+
+/* البطاقة الفرعية */
+.sub-card {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px;
+    border-radius: 8px;
+    width: 100px; /* تصغير العرض لتكون جنب بعض */
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+.sub-card:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+.sub-card img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 5px;
+}
+
+.sub-card h4 {
+    margin: 0;
+    font-size: 14px;
+    color: #fff;
+}
+
+.sub-card p {
+    margin: 5px 0 0;
+    font-size: 10px;
+    color: #e0e0e0;
+}

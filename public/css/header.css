@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Lemonada:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
+* {
+    font-family: 'Lemonada', sans-serif;
+}
+
+h1 {
+    font-size: 42px; /* تكبير العنوان */
+    font-weight: bold;
+    color: #1E88E5;
+    margin: 5px 0;
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+h1:hover {
+    transform: scale(1.1);
+    color: #f6c502; /* يتغير اللون عند التحريك */
+}
+
+h1 span {
+    color: #3FA9F5;
+}
+.logout-link {
+    font-family: '', sans-serif;
+
+    color: #ff0000; 
+    font-size: 1.0rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+    text-decoration: none;
+    white-space: nowrap;
+    background: none; 
+    border: none; 
+    padding: 0; 
+    
+}
+.logout-container {
+    position: absolute;
+    right: 80px; 
+}
+
+
+
+.logout-link:hover {
+    color: #cc0000;
+    text-decoration: underline;
+}
+header {
+    background: linear-gradient(135deg, #00002a, #064e74);
+    color: white;
+    text-align: center;
+    height: 100px;
+    width: 100vw;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    font-size: 1.8rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+   
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+nav {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.nav-list li {
+    display: inline;
+}
+
+.nav-list a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.nav-list a:hover {
+    background: #00002a;
+    color: black;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    margin: 20px;
+
+}
+
+.logo-container img {
+    width: 50px; 
+    height: 50px;
+    background: #00002a; 
+    padding: 5px; 
+    border-radius: 10px;    
+
+}
+.logo-container h1 {
+    font-size: 1.5rem; 
+}
+.logo-container img:hover {
+    transform: scale(1.1) translateY(-1px);
+    animation: shake 0.2s ease-in-out;
+}
+h2 {
+    color: #90caf9;
+    font-size: 1.6rem;
+    border-bottom: 3px solid #64b5f6;
+    padding-bottom: 8px;
+    font-weight: 600;
+    text-align: right;
+    direction: rtl;
+    margin-right: 120px;
+}
