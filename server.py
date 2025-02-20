@@ -59,7 +59,7 @@ with open("similarity_matrix.pkl", "rb") as f:
 templates = Jinja2Templates(directory="templates")  # Directory where your HTML templates are located
 
 # Function to get recommendations based on course ID
-def get_recommendations(course_id, data, similarity_matrix, top_n=20, rating_weight=0.05):
+def get_recommendations(course_id, data, similarity_matrix, top_n=5, rating_weight=0.05):
     try:
         course_id = int(course_id)  # Ensure it's an integer
     except ValueError:
@@ -95,7 +95,7 @@ def get_recommendations(course_id, data, similarity_matrix, top_n=20, rating_wei
 
 
 
-def get_recommendations_from_list_of_courses(courses_id, data, similarity_matrix, top_n=20):
+def get_recommendations_from_list_of_courses(courses_id, data, similarity_matrix, top_n=5):
     
     recommended = {}
 
@@ -150,7 +150,7 @@ async def get_all_recommendations(request: Request):
     
     # Assuming you have the get_recommendations_from_list_of_courses function defined
     recommended_courses = get_recommendations_from_list_of_courses(
-        courses_id, df, similarity_matrix, top_n=20
+        courses_id, df, similarity_matrix, top_n=5 ##########################################
     )
     
     if not recommended_courses:
