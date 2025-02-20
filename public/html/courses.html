@@ -104,7 +104,7 @@ fetch("http://127.0.0.1:8000/myrec", {
 
             // Function to show more course information in a new window
             function showMoreInfo(courseId) {
-                fetch("http://localhost:3000/api/course")
+                fetch("https://website1-1-uyc5.onrender/api/course")
                     .then(response => response.json())
                     .then(courses => {
                         const course = courses.find(c => Number(c.ID) === courseId);

@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     if (preferencesForm) {
-        fetch("http://localhost:3000/api/course")
+        fetch("https://website1-1-uyc5.onrender/api/course")
             .then(response => response.json())
             .then(courses => {
                 allCourses = courses; 
@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function() {
 function searchCourses() {
     let input = document.getElementById("searchInput").value.toLowerCase();
 
-    fetch("http://localhost:3000/api/course")
+    fetch("https://website1-1-uyc5.onrender/api/course")
         .then(response => response.json())
         .then(courses => {
             let filteredCourses = courses.filter(course =>
@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (enrolledCourses.length === 0) {
         enrolledCoursesList.innerHTML = "<li>لم تسجل في أي دورة حتى الآن.</li>";
     } else {
-        fetch("http://localhost:3000/api/course")
+        fetch("https://website1-1-uyc5.onrender/api/course")
             .then(response => response.json())
             .then(courses => {
                 console.log("قائمة الكورسات من API:", courses);
@@ -239,7 +239,7 @@ function removeCourse(courseId) {
 function showMoreInfo(courseId) {
     const enrolledCourseIds = JSON.parse(localStorage.getItem("enrolledCourses")) || [];
 
-        fetch("http://localhost:3000/api/course")
+        fetch("https://website1-1-uyc5.onrender/api/course")
             .then(response => response.json())
             .then(courses => {
                 const course = courses.find(courses => Number(courses.ID) === courseId);
