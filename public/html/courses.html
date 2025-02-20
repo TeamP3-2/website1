@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
+
 <body>
 
     <header>
@@ -19,7 +21,8 @@
                 <img src="../image/dd.png" alt="Logo">
                 <h4>مساري</h4>
             </div>
-        </div>    <nav>
+        </div>
+        <nav>
             <ul class="nav-list">
                 <li><a href="index.html">الرئيسية</a></li>
                 <li><a href="about.html">من نحن</a></li>
@@ -30,21 +33,158 @@
         </nav>
         <div class="logout-container">
             <span class="logout-text">تسجيل الخروج</span>
-               <a href="#" class="logout-link" id="logoutBtn"> 
-                   <span class="logout-text">تسجيل الخروج</span> 
-                   <i class="fas fa-sign-out-alt"></i> 
-               </a>
-           </div>
-   </header>
+            <a href="#" class="logout-link" id="logoutBtn">
+                <span class="logout-text">تسجيل الخروج</span>
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </header>
 
     <main>
-       
+
         <h2><i class="fa-solid fa-book-open"></i> الكورسات التي قمت بتسجيلها</h2>
         <div id="coursesContainer1" class="courses-container"></div>
-    </section>
-        
+
+        <h2>دورات مقترحة لك</h2>
+        <!-- <div id="recommendations"></div> -->
+        <div id="similarCourses"></div>
+
+
+        <script>
+
+
+        let enrolledCourses = JSON.parse(localStorage.getItem("enrolledCourses")) || [];
+            // const enrolledCourses = [30, 1285];
+            console.log("enrolledCourses R s:", enrolledCourses);
+
+            // fetch("http://127.0.0.1:7080/myrec", {
+            //     method: "POST",
+            //     headers: { "Content-Type": "application/json" },
+            //     body: JSON.stringify({ "course_ids": enrolledCourses })  // Sending list of course IDs
+            // })
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         // Check if the response contains recommendations
+            //         if (Array.isArray(data.recommendations)) {
+            //             console.log("Hereeeee Recommendations:", data.recommendations);
+            //             // Handle your recommendations here
+
+            //             let similarCoursesContainer = document.getElementById("similarCourses2");
+            //             let similarCoursesHTML = '';
+            //             data.recommendations.forEach(course => {
+            //                 similarCoursesHTML += `
+            //         <div class="course-card">
+            //             <h3>${course.course_name}</h3>
+            //             <p><strong>University:</strong> ${course.university}</p>
+            //             <p><strong>Level:</strong> ${course.difficulty_level}</p>
+            //             <p><strong>Rating:</strong> ${course.course_rating}</p>
+            //              <span class="inf" onclick="showMoreInfo(${course.course_id})">عرض المزيد من المعلومات</span>
+            //         </div>
+
+
+
+            //     `;
+            //             });
+
+            //             // Set the innerHTML of the similarCourses container with the generated HTML
+            //             similarCoursesContainer.innerHTML = similarCoursesHTML;
+
+
+
+            //         } else {
+            //             console.error("No recommendations found");
+            //         }
+            //     })
+            //     .catch(error => console.error("Error:", error));
+
+
+            // let enrolledCourses = JSON.parse(localStorage.getItem("enrolledCourses")) || [];
+console.log("الـ enrolledCourses:", enrolledCourses);
+
+fetch("http://127.0.0.1:7080/myrec", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ "course_ids": enrolledCourses })  // Sending list of course IDs
+})
+    .then(response => response.json())
+    .then(data => {
+        if (Array.isArray(data.recommendations)) {
+            console.log("Hereeeee Recommendations:", data.recommendations);
+            let similarCoursesContainer = document.getElementById("similarCourses");
+
+            // Using map to generate HTML for all recommended courses
+            const recommendationsHTML = data.recommendations.map(course => {
+                return `
+                <div class="course-card">
+                        <h3>${course.course_name}</h3>
+                        <p><strong>University:</strong> ${course.university}</p>
+                        <p><strong>Level:</strong> ${course.difficulty_level}</p>
+                        <p><strong>Rating:</strong> ${course.course_rating}</p>
+                        <span class="inff" onclick="showMoreInfo(${course.course_id})">عرض المزيد</span>
+                    </div>
+                `;
+            }).join("");  // Join the array of HTML strings into one string
+
+            // Insert the HTML into the container
+            similarCoursesContainer.innerHTML = recommendationsHTML;
+        } else {
+            console.error("No recommendations found");
+        }
+    })
+    .catch(error => console.error("Error:", error));
+
+
+
+
+
+
+
+            // Function to show more course information in a new window
+            function showMoreInfo(courseId) {
+                fetch("http://localhost:3000/api/course")
+                    .then(response => response.json())
+                    .then(courses => {
+                        const course = courses.find(c => Number(c.ID) === courseId);
+                        if (course) {
+                            const url = `../html/courseDetails.html?courseId=${courseId}`;
+                            window.open(url, '_blank');
+                        } else {
+                            alert("لم يتم العثور على الدورة!");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("❌ حدث خطأ أثناء جلب بيانات الدورة:", error);
+                        alert("حدث خطأ أثناء جلب بيانات الدورة.");
+                    });
+            }
+
+
+            // let enrolledCourses = localStorage.getItem("enrolledCourses");
+
+            // try {
+            //     enrolledCourses = JSON.parse(enrolledCourses);
+            // } catch (error) {
+            //     console.error("❌ خطأ في قراءة البيانات من localStorage:", error);
+            //     enrolledCourses = [];
+            // }
+
+            // // Ensure it's an array
+            // if (!Array.isArray(enrolledCourses)) {
+            //     enrolledCourses = [];
+            // }
+
+            // // Now enrolledCourses contains the list of stored course IDs
+            // console.log("📌 قائمة الـ courseId المخزنة في localStorage:", enrolledCourses);
+
+
+
+
+        </script>
+        </section>
+
     </main>
     <script src="../js/script.js"></script>
 
 </body>
+
 </html>
