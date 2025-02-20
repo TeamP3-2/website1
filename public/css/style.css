@@ -10,11 +10,7 @@ button {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
-button:hover {
-    background: #1565c0;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
-}
+
 
 #result {
     margin-top: 20px;
@@ -50,6 +46,7 @@ button:hover {
     font-size: 1.2rem;
     margin-top: 12px;
     line-height: 1.5;
+    
 }
 
 a {
@@ -70,26 +67,27 @@ a:hover {
 }
 
 .course-card {
-    background: linear-gradient(-45deg, #33aeff, #f1f1f1, #f1f1f1, #f1f1f1);
+    background: #099afb3a;
     color: #343434;  
     border-radius: 15px;
     padding: 20px;
     width: 280px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    border: 2px solid rgba(255, 255, 255, 0.4); /* إطار مميز */
-    backdrop-filter: blur(10px); /* تأثير الزجاج */
+    border: 3px solid rgba(34, 74, 195, 0.6); /* إطار أكثر وضوحًا */
+    backdrop-filter: blur(10px);
 }
 
 .course-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 255, 255, 0.7); /* تغيير لون الإطار عند التمرير */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    border: 3px solid rgba(61, 61, 61, 0.9); /* لون أقوى عند التمرير */
 }
+
 
 .enroll-btn {
     background: #1e1e1e; 
@@ -109,11 +107,25 @@ a:hover {
     color: white;
 }
 
+.inf {
+    font-family: '', sans-serif;
+    color: #515151; 
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-decoration: none;
+    white-space: nowrap;
+    background: none; 
+    border: none; 
+    padding: 0; 
+    cursor: pointer;
 
-.enroll-btn:hover {
-    background: #1b69c2;
 }
-/* ✅ تنسيق شريط البحث */
+.inf:hover  {
+    color: #0056b3; 
+    opacity: 1; 
+    transform: scale(1.01);}
+
+
 .search-section {
     text-align: center;
     margin: 20px 0;
@@ -128,7 +140,7 @@ a:hover {
     outline: none;
     text-align: right; 
     color: #000000; 
-    background-color: #368dd8;
+    background-color: #368cd86b;
     transition: 0.3s;
 }
 
@@ -136,10 +148,10 @@ a:hover {
     border-color: #0056b3;
     box-shadow: 0 0 8px rgba(0, 91, 187, 0.5);
     color: #000000; 
-    background-color: #ffffff; 
+    background-color: #d7d7d7; 
 }
 
 #searchInput::placeholder {
-    color: #80bfff; 
+    color: #000000; 
     text-align: right; 
 }

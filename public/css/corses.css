@@ -1,0 +1,57 @@
+
+.courses:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    border: 3px solid rgba(61, 61, 61, 0.9); /* لون أقوى عند التمرير */
+}
+
+.courses h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.courses p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.courses ul {
+     background: #099afb3a;
+    color: #343434;  
+    border-radius: 15px;
+    padding: 20px;
+    width: 280px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s, box-shadow 0.3s, border 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 3px solid rgba(34, 74, 195, 0.6); /* إطار أكثر وضوحًا */
+    backdrop-filter: blur(10px);
+}
+
+.courses ul li {
+    padding: 10px;
+    background-color: #fff;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.courses ul li i {
+    margin-right: 10px;
+    color: #3b5998;
+}
+#coursesContainer1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}

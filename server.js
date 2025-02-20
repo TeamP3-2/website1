@@ -2,65 +2,23 @@ const express = require('express');
 const app = express();
 const port = 3000;
 const path = require('path');
+const fs = require('fs'); // استيراد fs لقراءة ملفات النظام
+
 app.use(express.static(path.join(__dirname, 'public')));
-// تحديد المسار الافتراضي لصفحة index.html
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'html', 'landing.html'));
 });
 
-// بيانات الكورس
-const courses = [
-    {
-        id: 1,
-        title: "أساسيات البرمجة بلغة JavaScript",
-        description: "تعلم أساسيات JavaScript من الصفر إلى الاحتراف.",
-        duration: "4 أسابيع",
-        instructor: "محمد خالد",
-        price: "مجاني"
-    },
-    {
-        id: 2,
-        title: "مقدمة في الذكاء الاصطناعي",
-        description: "اكتشف عالم الذكاء الاصطناعي وخوارزمياته الأساسية.",
-        duration: "6 أسابيع",
-        instructor: "د. أحمد علي",
-        price: "مجاني"
-    },
-    {
-        id: 3,
-        title: "تطوير تطبيقات الويب باستخدام React",
-        description: "دورة شاملة لبناء تطبيقات ويب تفاعلية باستخدام React.js.",
-        duration: "5 أسابيع",
-        instructor: "سارة حسن",
-        price: "مجاني"
-    },
-    {
-        id: 4,
-        title: "تحليل البيانات باستخدام Python",
-        description: "تعلم تحليل البيانات بلغة Python باستخدام Pandas و NumPy.",
-        duration: "7 أسابيع",
-        instructor: "ياسر محمود",
-        price: "مجاني"
-    },
-    {
-        id: 5,
-        title: "أساسيات الأمن السيبراني",
-        description: "تعرف على المفاهيم الأساسية لحماية المعلومات والأمان السيبراني.",
-        duration: "3 أسابيع",
-        instructor: "نورا سعيد",
-        price: "مجاني"
-    },
-    {
-        id: 6,
-        title: "أساسيات الأمن السيبراني",
-        description: "تعرف على المفاهيم الأساسية لحماية المعلومات والأمان السيبراني.",
-        duration: "3 أسابيع",
-        instructor: "نورا سعيد",
-        price: "مجاني"
-    }
-];
 app.get('/api/course', (req, res) => {
-    res.json(courses); // إرجاع بيانات الكورس على شكل JSON
+    // قراءة ملف JSON بشكل متزامن
+    fs.readFile(path.join(__dirname, 'csvjson.json'), 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).json({ error: 'حدث خطأ أثناء قراءة بيانات الكورسات.' });
+        }
+        const courses = JSON.parse(data); // تحويل البيانات إلى JSON
+        res.json(courses); // إرجاع بيانات الكورسات
+    });
 });
 
 app.get('/:page', (req, res) => {
@@ -71,8 +29,8 @@ app.get('/:page', (req, res) => {
         }
     });
 });
-// API Endpoint لجلب معلومات الكورس
 
+// تشغيل السيرفر
 app.listen(port, () => {
     console.log(`API is running on http://localhost:${port}`);
 });

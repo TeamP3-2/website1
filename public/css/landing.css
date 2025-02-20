@@ -2,20 +2,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
 
-
-* {
-    font-family: 'Lemonada', sans-serif;
-}
 @keyframes backgroundAnimation {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 .card {
-    background: linear-gradient(-45deg, #33aeff, #ffffff, #ffffff, #ffffff);
+    background: linear-gradient(-45deg, #33aeff, #cbeaff, #ffffff, #b7e2ff);
     padding: 50px;
     border-radius: 20px;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
     text-align: center;
     width: 500px;
     height: 450px;
@@ -28,14 +23,12 @@
     margin-left: 100px;
 }
 
-/* تأثير الفوكس مع الإضاءة */
 .card:hover {
     transform: scale(1.05); /* تكبير خفيف */
     box-shadow: 0 0 20px rgba(30, 136, 229, 0.7); /* إضاءة زرقاء ناعمة */
 }
 
 
-/* ✨ حركة عند التحريك على الشعار */
 .logo {
     width: 180px; /* تكبير اللوجو */
     transition: transform 0.3s ease-in-out;
@@ -47,7 +40,6 @@
     animation: shake 0.3s ease-in-out;
 }
 
-/* ✨ حركة عند التحريك على العنوان */
 
 .subtext {
     font-size: 14px;
@@ -92,16 +84,14 @@
 }
 
 
-/* ✨ تأثير عند تمرير الماوس على النص */
 .description:hover {
     transform: scale(1.05);
-    color: #1E88E5;
+    color: #0e0e0e;
 }
-/* ✨ القسم الجديد على اليمين */
 .right-section {
     max-width: 500px;
     text-align: right;
-    color: white;
+    color: rgb(9, 9, 9);
     margin-left: 50px;
 
 }
@@ -116,10 +106,9 @@
     font-size: 18px;
     line-height: 1.8;
     font-family: 'Tajawal', sans-serif;
-    color: #f0f0f0;
+    color: #0b0b0b;
 }
 
-/* ✨ زر تسجيل الدخول والتسجيل */
 .auth-button {
     display: inline-block;
     background: #ffcc00;
@@ -140,7 +129,6 @@
     transform: scale(1.1);
 }
 
-/* ✨ حركة عند التحريك على العنوان */
 h1:hover {
     transform: scale(1.1);
     color: #f6c502;
@@ -191,13 +179,12 @@ input, select, button {
     font-size: 1rem;
     transition: all 0.3s ease-in-out;
     background: #5fabee;
-    color: #e0e0e0;
+    color: #070707;
     cursor: pointer;
 }
 
-/* تأثير عند التركيز (Focus) */
 input:focus, select:focus, button:focus {
-    border-color: #c0e2ff;
+    border-color: #141415;
     outline: none;
     box-shadow: 0 0 10px rgba(100, 181, 246, 0.6);
     transform: scale(1.005); /* تكبير خفيف عند التركيز */
@@ -224,7 +211,7 @@ p {
 }
 
 h2 {
-    color: #90caf9;
+    color: #030303;
     font-size: 1.6rem;
     border-bottom: 3px solid #64b5f6;
     padding-bottom: 8px;

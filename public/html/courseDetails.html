@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Details</title>
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/body.css"> 
+    <link rel="stylesheet" href="../css/ditals.css">  
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-box">
+            <div class="logo-container">
+                <img src="../image/dd.png" alt="Logo">
+                <h4>مساري</h4>
+            </div>
+        </div>   
+    </header>  
+
+    <h2>تفاصيل الدورة</h2>
+    <div id="courseDetails"></div>
+    
+    <!-- Similar courses section -->
+    <h2>دورات مشابهة</h2>
+    <div id="similarCourses"></div>
+
+    <script>
+        const courseId = new URLSearchParams(window.location.search).get("courseId");
+
+        fetch("http://localhost:3000/api/course")
+            .then(response => response.json())
+            .then(courses => {
+                const course = courses.find(c => Number(c.ID) === Number(courseId));
+
+                if (course) {
+                    // Display current course details
+                    document.getElementById("courseDetails").innerHTML = `
+                        <h12>${course["Course Name"]}</h12>
+                        <p><strong>Course Description:</strong> ${course["Course Description"]}</p>
+                        <p><strong>University:</strong> ${course["University"]}</p>
+                        <p><strong>Level:</strong> ${course["Difficulty Level"]}</p>
+                        <p><strong>Rating:</strong> ${course["Course Rating"]}</p>
+                        <p><strong>Course URL:</strong> <a href="${course["Course URL"]}" target="_blank">Click here</a></p>
+                    `;
+
+                    // Find similar courses (based on university or difficulty level, for example)
+                    const similarCourses = courses.filter(c => 
+    c["Course Name"].toLowerCase().includes(course["Course Name"].toLowerCase().substring(0, 5)) && c["ID"] !== courseId
+);
+
+
+                    // Display similar courses
+                    const similarCoursesHTML = similarCourses.map(similarCourse => {
+                        return `
+                            <div class="course-card">
+                                <h3>${similarCourse["Course Name"]}</h3>
+                                <p><strong>University:</strong> ${similarCourse["University"]}</p>
+                                <p><strong>Level:</strong> ${similarCourse["Difficulty Level"]}</p>
+                                <p><strong>Rating:</strong> ${similarCourse["Course Rating"]}</p>
+                            <span class="inff" onclick="showMoreInfo(${similarCourse['ID']})">عرض المزيد</span>
+                                
+                            </div>
+                        `;
+                    }).join("");
+
+                    document.getElementById("similarCourses").innerHTML = similarCoursesHTML;
+
+                } else {
+                    document.getElementById("courseDetails").innerHTML = "<p>الدورة غير موجودة.</p>";
+                }
+            })
+            .catch(error => {
+                console.error("❌ حدث خطأ أثناء جلب بيانات الدورة:", error);
+                document.getElementById("courseDetails").innerHTML = "<p>حدث خطأ أثناء جلب تفاصيل الدورة.</p>";
+            });
+
+            function showMoreInfo(courseId) {
+    const enrolledCourseIds = JSON.parse(localStorage.getItem("enrolledCourses")) || [];
+
+        fetch("http://localhost:3000/api/course")
+            .then(response => response.json())
+            .then(courses => {
+                const course = courses.find(courses => Number(courses.ID) === courseId);
+                console.log(courseId);
+                console.log(course);
+                if (course) {
+                    const url = `../html/courseDetails.html?courseId=${courseId}`;
+                    const newWindow = window.open(url, '_blank');
+                } else {
+                    alert("لم يتم العثور على الدورة!");
+                }
+            })
+            .catch(error => {
+                console.error("❌ حدث خطأ أثناء جلب بيانات الدورة:", error);
+                alert("حدث خطأ أثناء جلب بيانات الدورة.");
+            });
+   
+}  
+    </script>
+</body>
+</html>

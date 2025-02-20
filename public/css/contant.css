@@ -1,6 +1,6 @@
 .contact {
     text-align: right;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(121, 166, 243, 0.508);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -9,17 +9,18 @@
     margin: auto;
     text-align: right; 
     padding: 30px;
-    direction: rtl; 
+    direction: rtl;
+    margin-top: 50px; /* تحكم في المسافة من الأعلى */
 }
 
 
 
 .contact h2 {
-    color: #f8f8f8; /* لون واضح وأنيق */
+    color: #000000; /* لون واضح وأنيق */
     font-size: 28px;
     margin-bottom: 15px;
     text-transform: uppercase;
-    border-bottom: 3px solid #004080;
+    border-bottom: 3px solid #00408096;
     padding-bottom: 8px;
     display: inline-block;
     letter-spacing: 1px;
@@ -29,12 +30,12 @@
 
 .contact-info p {
     font-size: 18px;
-    color: #ddd;
+    color: #000000;
     margin-bottom: 10px;
 }
 
 .contact-info i {
-    color: #1e88e5;
+    color: #083155;
     margin-left: 8px;
 }
 
@@ -57,7 +58,7 @@
 
 .social-icon {
     font-size: 24px;
-    color: #fff;
+    color: #000000;
     transition: color 0.3s ease-in-out;
 }
 

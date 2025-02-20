@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/body.css">
+    <link rel="stylesheet" href="../css/corses.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
@@ -16,7 +17,7 @@
         <div class="header-box">
             <div class="logo-container">
                 <img src="../image/dd.png" alt="Logo">
-                <h1>مساري</h1>
+                <h4>مساري</h4>
             </div>
         </div>    <nav>
             <ul class="nav-list">
@@ -27,25 +28,20 @@
                 <li><a href="contact.html">تواصل معنا</a></li>
             </ul>
         </nav>
-    <div class="logout-container">
-        <a href="#" class="logout-link" id="logoutBtn">تسجيل الخروج</a>
-    </div> 
+        <div class="logout-container">
+            <span class="logout-text">تسجيل الخروج</span>
+               <a href="#" class="logout-link" id="logoutBtn"> 
+                   <span class="logout-text">تسجيل الخروج</span> 
+                   <i class="fas fa-sign-out-alt"></i> 
+               </a>
+           </div>
    </header>
 
     <main>
-        <section class="search-section">
-            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="text" id="searchInput" placeholder="ابحث عن دورة..." onkeyup="searchCourses()">
-        </section>
-        <section class="courses">
-            <h2><i class="fa-solid fa-book-open"></i> دوراتي</h2>
-            <p>هنا يمكنك العثور على الدورات التي اشتركت بها.</p>
-            <ul>
-                <li><i class="fa-solid fa-robot"></i> دورة الذكاء الاصطناعي</li>
-                <li><i class="fa-solid fa-chart-line"></i> دورة علوم البيانات</li>
-                <li><i class="fa-solid fa-code"></i> دورة تطوير الويب</li>
-            </ul>
-        </section>
+       
+        <h2><i class="fa-solid fa-book-open"></i> الكورسات التي قمت بتسجيلها</h2>
+        <div id="coursesContainer1" class="courses-container"></div>
+    </section>
         
     </main>
     <script src="../js/script.js"></script>

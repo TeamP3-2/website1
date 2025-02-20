@@ -1,4 +1,5 @@
-let allCourses = []; // تخزين جميع الدورات عند التحميل
+let allCourses = []; 
+
 document.addEventListener("DOMContentLoaded", function() {
     let preferencesForm = document.getElementById("coursesContainer");
     let loginForm = document.getElementById("loginForm");
@@ -32,20 +33,16 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-
     if (preferencesForm) {
         fetch("http://localhost:3000/api/course")
-        .then(response => response.json())
-        .then(courses => {
-            allCourses = courses; // تخزين الدورات عند التحميل
-            displayCourses(allCourses); // عرض جميع الدورات في البداية
-        })
-        .catch(error => console.error("❌ Error fetching courses:", error));
+            .then(response => response.json())
+            .then(courses => {
+                allCourses = courses; 
+                displayCourses(allCourses); 
+            })
+            .catch(error => console.error("❌ Error fetching courses:", error));
     }
-    
-    // دالة لعرض الدورات بناءً على القائمة المعطاة
 
-    
     if (loginForm) {
         loginForm.addEventListener("submit", function(event) {
             event.preventDefault();
@@ -85,33 +82,170 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
-    function displayCourses(courses) {
-        let coursesContainer = document.getElementById("coursesContainer");
-        let coursesHTML = "";
-    
-        courses.slice(0, 6).forEach(course => {
-            coursesHTML += `
-                <div class="course-card">
-                    <h3>${course.title}</h3>
-                    <p>${course.description}</p>
-                    <p><strong>المدة:</strong> ${course.duration}</p>
-                    <p><strong>المدرب:</strong> ${course.instructor}</p>
-                    <p><strong>السعر:</strong> ${course.price}</p>
-                    <button class="enroll-btn">التسجيل</button>
-                </div>
-            `;
-        });
-    
-        coursesContainer.innerHTML = coursesHTML;
-    }
-    
-    // دالة البحث عن الدورات
-    function searchCourses() {
-        let input = document.getElementById("searchInput").value.toLowerCase();
-        let filteredCourses = allCourses.filter(course => 
-            course.title.toLowerCase().includes(input) || 
-            course.description.toLowerCase().includes(input)
+
+
+
+function searchCourses() {
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    let filteredCourses = allCourses.filter(course => 
+        course["Course Name"].toLowerCase().includes(input)
         );
+
+    displayCourses(filteredCourses); 
+}
+function displayCourses(courses) {
+    let clusters = {}; 
+    let coursesContainer = document.getElementById("coursesContainer");
     
-        displayCourses(filteredCourses); // عرض النتائج المطابقة فقط
+    if (coursesContainer) {
+        courses.forEach(course => {
+            let clusterTitle = course["Cluster Title"] || "غير مصنف"; 
+            
+            if (!clusters[clusterTitle]) {
+                clusters[clusterTitle] = []; 
+            }
+            clusters[clusterTitle].push(course);
+        });
+
+        let coursesHTML = "";
+        for (let clusterTitle in clusters) {
+            coursesHTML += `         
+                <h2><i class="fa-solid fa-book-open"></i>   ${clusterTitle}</h2>
+                     
+            `;
+            
+            clusters[clusterTitle].slice(0, 8).forEach(course => { 
+                coursesHTML += `
+                    <div class="course-card">
+                        <h3>${course["Course Name"]}</h3>
+                        <p><strong>University:</strong> ${course["University"]}</p>
+                        <p><strong>Level:</strong> ${course["Difficulty Level"]}</p>
+                        <p><strong>Rating:</strong> ${course["Course Rating"]}</p>
+                        <button class="enroll-btn" data-course-id="${course["ID"]}">التسجيل</button>
+                        <span class="inf" onclick="showMoreInfo(${course["ID"]})">عرض المزيد من المعلومات</span>
+                    </div>
+                `;
+            });
+
+        
+        }
+
+        coursesContainer.innerHTML = coursesHTML;
+
+        document.querySelectorAll(".enroll-btn").forEach(button => {
+            button.addEventListener("click", function() {
+                let courseId = this.getAttribute("data-course-id");
+                let storedCourses = JSON.parse(localStorage.getItem("enrolledCourses")) || [];
+
+                if (!storedCourses.includes(courseId)) {
+                    storedCourses.push(courseId); // إضافة معرف الدورة للمصفوفة
+                    localStorage.setItem("enrolledCourses", JSON.stringify(storedCourses)); // تخزين المصفوفة في localStorage
+                    alert(`تم تسجيلك بالكورس رقم ${courseId}`);
+                } else {
+                    alert("✅ أنت مسجل بالفعل في هذا الكورس!");
+                }
+            });
+        });
+    } else {
+        console.error("❌ العنصر 'coursesContainer' غير موجود في الصفحة.");
     }
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    let enrolledCoursesList = document.getElementById("coursesContainer1");
+
+    let enrolledCourses = localStorage.getItem("enrolledCourses");
+
+    try {
+        enrolledCourses = JSON.parse(enrolledCourses);
+    } catch (error) {
+        console.error("❌ خطأ في قراءة البيانات من localStorage:", error);
+        enrolledCourses = [];
+    }
+
+    if (!Array.isArray(enrolledCourses)) {
+        console.warn("⚠️ البيانات المخزنة ليست مصفوفة. سيتم إعادة ضبطها.");
+        enrolledCourses = [];
+    }
+
+    if (enrolledCourses.length === 0) {
+        enrolledCoursesList.innerHTML = "<li>لم تسجل في أي دورة حتى الآن.</li>";
+    } else {
+        fetch("http://localhost:3000/api/course")
+            .then(response => response.json())
+            .then(courses => {
+                console.log("قائمة الكورسات من API:", courses);
+
+                let enrolledCoursesHTML = "";
+                enrolledCoursesHTML += enrolledCourses.map(courseId => {
+                    console.log("الـ courseId الموجود في localStorage:", courseId);
+
+                    let course = courses.find(c => String(c.ID) === String(courseId));
+
+                    if (course) {
+                        return `
+                            <div class="course-card" id="course-${course["ID"]}">
+                                <h3>${course["Course Name"]}</h3>
+                                <p><strong>University:</strong> ${course["University"]}</p>
+                                <p><strong>Level:</strong> ${course["Difficulty Level"]}</p>
+                                <p><strong>Rating:</strong> ${course["Course Rating"]}</p>
+                                <button class="enroll-btn" data-course-id="${course["ID"]}">حذف</button>
+                                <span class="inf" onclick="showMoreInfo(${course['ID']})">عرض المزيد من المعلومات</span>
+                            </div>
+                        `;
+                    } else {
+                        console.log(`لم يتم العثور على الدورة مع الـ courseId: ${courseId}`);
+                    }
+                }).join("");
+                enrolledCoursesList.innerHTML = enrolledCoursesHTML;
+                let deleteButtons = document.querySelectorAll(".enroll-btn");
+                deleteButtons.forEach(button => {
+                    button.addEventListener("click", function() {
+                        let courseId = this.getAttribute("data-course-id");
+                        removeCourse(courseId);
+                    });
+                });
+            })
+            .catch(error => {
+                console.error("❌ حدث خطأ أثناء جلب بيانات الدورات:", error);
+                enrolledCoursesList.innerHTML = "<li>حدث خطأ أثناء جلب الدورات.</li>";
+            });
+    }
+});
+
+
+
+
+function removeCourse(courseId) {
+    let enrolledCourses = JSON.parse(localStorage.getItem("enrolledCourses")) || [];
+    enrolledCourses = enrolledCourses.filter(course => course !== courseId);  // إزالة الدورة من المصفوفة
+
+    localStorage.setItem("enrolledCourses", JSON.stringify(enrolledCourses));
+
+    let courseElement = document.getElementById(`course-${courseId}`);
+    if (courseElement) {
+        courseElement.remove();
+    }
+}
+function showMoreInfo(courseId) {
+    const enrolledCourseIds = JSON.parse(localStorage.getItem("enrolledCourses")) || [];
+
+        fetch("http://localhost:3000/api/course")
+            .then(response => response.json())
+            .then(courses => {
+                const course = courses.find(courses => Number(courses.ID) === courseId);
+                console.log(courseId);
+                console.log(course);
+                if (course) {
+                    const url = `../html/courseDetails.html?courseId=${courseId}`;
+                    const newWindow = window.open(url, '_blank');
+                } else {
+                    alert("لم يتم العثور على الدورة!");
+                }
+            })
+            .catch(error => {
+                console.error("❌ حدث خطأ أثناء جلب بيانات الدورة:", error);
+                alert("حدث خطأ أثناء جلب بيانات الدورة.");
+            });
+   
+}  
