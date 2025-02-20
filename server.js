@@ -7,7 +7,7 @@ const fs = require('fs'); // استيراد fs لقراءة ملفات النظ�
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'html', 'landing.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.get('/api/course', (req, res) => {
