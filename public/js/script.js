@@ -87,12 +87,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function searchCourses() {
     let input = document.getElementById("searchInput").value.toLowerCase();
-    let filteredCourses = allCourses.filter(course => 
-        course["Course Name"].toLowerCase().includes(input)
-        );
 
-    displayCourses(filteredCourses); 
+    fetch("http://localhost:3000/api/course")
+        .then(response => response.json())
+        .then(courses => {
+            let filteredCourses = courses.filter(course =>
+                course["Course Name"].toLowerCase().includes(input)
+            );
+
+            displayCourses(filteredCourses);  
+        })
+        .catch(error => {
+            console.error("❌ حدث خطأ أثناء البحث في API:", error);
+        });
 }
+
 function displayCourses(courses) {
     let clusters = {}; 
     let coursesContainer = document.getElementById("coursesContainer");

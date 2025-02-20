@@ -8,7 +8,8 @@
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/body.css">
-    <link rel="stylesheet" href="../css/corses.css">
+    <link rel="stylesheet" href="../css/corses.css"> 
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
@@ -57,57 +58,18 @@
             // const enrolledCourses = [30, 1285];
             console.log("enrolledCourses R s:", enrolledCourses);
 
-            // fetch("http://127.0.0.1:7080/myrec", {
-            //     method: "POST",
-            //     headers: { "Content-Type": "application/json" },
-            //     body: JSON.stringify({ "course_ids": enrolledCourses })  // Sending list of course IDs
-            // })
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         // Check if the response contains recommendations
-            //         if (Array.isArray(data.recommendations)) {
-            //             console.log("Hereeeee Recommendations:", data.recommendations);
-            //             // Handle your recommendations here
-
-            //             let similarCoursesContainer = document.getElementById("similarCourses2");
-            //             let similarCoursesHTML = '';
-            //             data.recommendations.forEach(course => {
-            //                 similarCoursesHTML += `
-            //         <div class="course-card">
-            //             <h3>${course.course_name}</h3>
-            //             <p><strong>University:</strong> ${course.university}</p>
-            //             <p><strong>Level:</strong> ${course.difficulty_level}</p>
-            //             <p><strong>Rating:</strong> ${course.course_rating}</p>
-            //              <span class="inf" onclick="showMoreInfo(${course.course_id})">عرض المزيد من المعلومات</span>
-            //         </div>
-
-
-
-            //     `;
-            //             });
-
-            //             // Set the innerHTML of the similarCourses container with the generated HTML
-            //             similarCoursesContainer.innerHTML = similarCoursesHTML;
-
-
-
-            //         } else {
-            //             console.error("No recommendations found");
-            //         }
-            //     })
-            //     .catch(error => console.error("Error:", error));
-
-
-            // let enrolledCourses = JSON.parse(localStorage.getItem("enrolledCourses")) || [];
+        
 console.log("الـ enrolledCourses:", enrolledCourses);
 
-fetch("http://127.0.0.1:7080/myrec", {
+fetch("http://127.0.0.1:8000/myrec", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ "course_ids": enrolledCourses })  // Sending list of course IDs
 })
     .then(response => response.json())
     .then(data => {
+    console.log("عدد التوصيات المستلمة:", data.recommendations.length);
+
         if (Array.isArray(data.recommendations)) {
             console.log("Hereeeee Recommendations:", data.recommendations);
             let similarCoursesContainer = document.getElementById("similarCourses");
@@ -115,15 +77,16 @@ fetch("http://127.0.0.1:7080/myrec", {
             // Using map to generate HTML for all recommended courses
             const recommendationsHTML = data.recommendations.map(course => {
                 return `
-                <div class="course-card">
-                        <h3>${course.course_name}</h3>
+                <div class="course-card1">
+                        <h5>${course.course_name}</h5>
                         <p><strong>University:</strong> ${course.university}</p>
                         <p><strong>Level:</strong> ${course.difficulty_level}</p>
                         <p><strong>Rating:</strong> ${course.course_rating}</p>
                         <span class="inff" onclick="showMoreInfo(${course.course_id})">عرض المزيد</span>
                     </div>
                 `;
-            }).join("");  // Join the array of HTML strings into one string
+            }).join(""); 
+             // Join the array of HTML strings into one string
 
             // Insert the HTML into the container
             similarCoursesContainer.innerHTML = recommendationsHTML;
