@@ -50,7 +50,7 @@ button {
 }
 
 a {
-    color: #64b5f6;
+    color: #20425d;
     font-weight: bold;
     text-decoration: none;
 }
@@ -154,4 +154,60 @@ a:hover {
 #searchInput::placeholder {
     color: #000000; 
     text-align: right; 
+}
+/* تصميم النافذة المنبثقة */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    margin: 15% auto;
+    width: 40%;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.close {
+    float: right;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.stars {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.star {
+    font-size: 30px;
+    cursor: pointer;
+    color: gray;
+}
+
+.star:hover,
+.star.active {
+    color: gold;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: #218838;
 }

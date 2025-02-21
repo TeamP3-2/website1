@@ -72,7 +72,7 @@ def get_recommendations(course_id, data, similarity_matrix, top_n=5, rating_weig
     similarity_scores = list(enumerate(similarity_matrix[course_idx]))
 
     recommendations = []
-    for idx, similarity_score in sorted(similarity_scores, key=lambda x: x[1], reverse=True)[:top_n]:
+    for idx, similarity_score in sorted(similarity_scores, key=lambda x: x[1], reverse=True)[1:top_n+1]:
         course_data = data.iloc[idx]
 
         recommendations.append({
@@ -119,7 +119,7 @@ def get_recommendations_from_list_of_courses(courses_id, data, similarity_matrix
                     "difficulty_level": course_data['Difficulty Level'],
                     "course_rating": course_data['Course Rating'],
                     "course_url": course_data['Course URL'],
-                    "similarity": round(similarity_score * 100, 2)
+          "similarity": round(similarity_score , 2)  # تحويلها إلى نسبة مئوية
                 }
 
     return sorted(recommended.values(), key=lambda x: x['similarity'], reverse=True)[:top_n]

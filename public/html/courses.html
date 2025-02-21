@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/body.css">
     <link rel="stylesheet" href="../css/corses.css"> 
-    <link rel="stylesheet" href="../css/ditals.css"> 
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -17,7 +16,20 @@
 </head>
 
 <body>
-
+    <div id="ratingModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>قيّم تجربتك قبل تسجيل الخروج</h2>
+            <div class="stars">
+                <span class="star" data-value="1">&#9733;</span>
+                <span class="star" data-value="2">&#9733;</span>
+                <span class="star" data-value="3">&#9733;</span>
+                <span class="star" data-value="4">&#9733;</span>
+                <span class="star" data-value="5">&#9733;</span>
+            </div>
+            <button id="submitRating">إرسال</button>
+        </div>
+    </div>
     <header>
         <div class="header-box">
             <div class="logo-container">
@@ -45,7 +57,7 @@
 
     <main>
 
-        <h2><i class="fa-solid fa-book-open"></i> الكورسات التي قمت بتسجيلها</h2>
+        <h2><i class="fa-solid fa-book-open"></i> الدورات التي قمت بتسجيلها</h2>
         <div id="coursesContainer1" class="courses-container"></div>
 
         <h2>دورات مقترحة لك</h2>
@@ -97,7 +109,7 @@ if (enrolledCourses.length === 0) {
                     // إضافة التوصيات الخاصة بكل كورس إلى الـ container
                     similarCoursesContainer.innerHTML += `
                     <div id="similarCourses">
-                        <h2>توصيات للكورس: ${courseName}</h2>
+                        <h2>توصيات للدورة: ${courseName}</h2>
                         ${recommendationsHTML}
                     </div>
                     `;

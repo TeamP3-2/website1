@@ -24,15 +24,45 @@ document.addEventListener("DOMContentLoaded", function() {
         } else {
             logoutBtn.style.display = "none";
         }
-
-        logoutBtn.addEventListener("click", function() {
-            let confirmLogout = confirm("هل تريد تسجيل الخروج؟");
-            if (confirmLogout) {
-                window.location.href = "signin.html";
-            }
+    
+        logoutBtn.addEventListener("click", function () {
+            let ratingModal = document.getElementById("ratingModal");
+            let closeBtn = document.querySelector(".close");
+            let stars = document.querySelectorAll(".star");
+            let submitRating = document.getElementById("submitRating");
+            let selectedRating = 0;
+    
+            // عرض نافذة التقييم
+            ratingModal.style.display = "block";
+    
+            // اختيار النجوم
+            stars.forEach(star => {
+                star.addEventListener("click", function () {
+                    selectedRating = this.getAttribute("data-value");
+                    stars.forEach(s => s.classList.remove("active"));
+                    for (let i = 0; i < selectedRating; i++) {
+                        stars[i].classList.add("active");
+                    }
+                });
+            });
+    
+            // إغلاق النافذة
+            closeBtn.addEventListener("click", function () {
+                ratingModal.style.display = "none";
+            });
+    
+            // إرسال التقييم وتسجيل الخروج
+            submitRating.addEventListener("click", function () {
+                if (selectedRating > 0) {
+                    alert("شكرًا على تقييمك: " + selectedRating + " نجوم!");
+                    window.location.href = "signin.html";
+                } else {
+                    alert("يرجى اختيار تقييم قبل المتابعة.");
+                }
+            });
         });
     }
-
+    
     if (preferencesForm) {
         fetch("http://localhost:3000/api/course")
             .then(response => response.json())
