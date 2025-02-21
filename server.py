@@ -88,7 +88,8 @@ def get_recommendations(course_id, data, similarity_matrix, top_n=5, rating_weig
             "difficulty_level": course_data['Difficulty Level'],
             "course_rating": course_data['Course Rating'],
             "course_url": course_data['Course URL'] ,
-            "similarity": similarity_score
+          "similarity": round(similarity_score * 100, 2)  # تحويلها إلى نسبة مئوية
+
                     })
 
     return sorted(recommendations, key=lambda x: x['similarity'], reverse=True)
@@ -118,7 +119,7 @@ def get_recommendations_from_list_of_courses(courses_id, data, similarity_matrix
                     "difficulty_level": course_data['Difficulty Level'],
                     "course_rating": course_data['Course Rating'],
                     "course_url": course_data['Course URL'],
-                    "similarity": similarity_score
+                    "similarity": round(similarity_score * 100, 2)
                 }
 
     return sorted(recommended.values(), key=lambda x: x['similarity'], reverse=True)[:top_n]
@@ -138,27 +139,30 @@ async def get_course_recommendations(course_id: int):
     # return JSONResponse(content={recommended_courses})
 
 
-
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 
- 
 @app.post("/myrec")
 async def get_all_recommendations(request: Request):
     body = await request.json()
     courses_id = body.get("course_ids", [])
     
-    # Assuming you have the get_recommendations_from_list_of_courses function defined
-    recommended_courses = get_recommendations_from_list_of_courses(
-        courses_id, df, similarity_matrix, top_n=5 ##########################################
-    )
-    
-    if not recommended_courses:
+    # إذا كانت القائمة فارغة
+    if len(courses_id) == 0:
         return JSONResponse(content={"recommendations": []})
+
+    # تخزين التوصيات لكل كورس على حدة
+    all_recommendations = {}
+
+    # التصفية حسب كل كورس على حدة
+    for course_id in courses_id:
+        recommended_courses = get_recommendations_from_list_of_courses(
+            [course_id], df, similarity_matrix, top_n=5
+        )
+        all_recommendations[course_id] = recommended_courses
     
-    return JSONResponse(content={"recommendations": recommended_courses})
- 
- 
+    # إعادة التوصيات لجميع الكورسات
+    return JSONResponse(content={"recommendations": all_recommendations})
 
 
 

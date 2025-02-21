@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/body.css">
     <link rel="stylesheet" href="../css/corses.css"> 
+    <link rel="stylesheet" href="../css/ditals.css"> 
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -48,83 +50,91 @@
 
         <h2>دورات مقترحة لك</h2>
         <!-- <div id="recommendations"></div> -->
-        <div id="similarCourses"></div>
+        <div id="similarCoursess"></div>
 
 
         <script>
-
-
-        let enrolledCourses = JSON.parse(localStorage.getItem("enrolledCourses")) || [];
-            // const enrolledCourses = [30, 1285];
-            console.log("enrolledCourses R s:", enrolledCourses);
-
-        
+          let enrolledCourses = JSON.parse(localStorage.getItem("enrolledCourses")) || [];
 console.log("الـ enrolledCourses:", enrolledCourses);
 
-fetch("http://127.0.0.1:8000/myrec", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ "course_ids": enrolledCourses })  // Sending list of course IDs
-})
+// إذا كانت مصفوفة enrolledCourses فارغة
+if (enrolledCourses.length === 0) {
+    alert("لم تقم بالتسجيل في أي دورة بعد.");
+} else {
+    fetch("http://127.0.0.1:8000/myrec", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ "course_ids": enrolledCourses })  // إرسال قائمة الكورسات
+    })
     .then(response => response.json())
     .then(data => {
+        if (data.recommendations && Object.keys(data.recommendations).length > 0) {
+            console.log("التوصيات:", data.recommendations);
+            let similarCoursesContainer = document.getElementById("similarCoursess");
 
-        if (Array.isArray(data.recommendations)) {
-            console.log("Hereeeee Recommendations:", data.recommendations);
-            let similarCoursesContainer = document.getElementById("similarCourses");
+            // إنشاء HTML لكل كورس والتوصيات الخاصة به
+            enrolledCourses.forEach(courseId => {
+                const courseRecommendations = data.recommendations[courseId] || [];
 
-            // Using map to generate HTML for all recommended courses
-            const recommendationsHTML = data.recommendations.map(course => {
-                return `
-                <div class="course-card1">
-                        <h5>${course.course_name}</h5>
-                        <p><strong>University:</strong> ${course.university}</p>
-                        <p><strong>Level:</strong> ${course.difficulty_level}</p>
-                        <p><strong>Rating:</strong> ${course.course_rating}</p>
-                        <span class="inff" onclick="showMoreInfo(${course.course_id})">عرض المزيد</span>
+                // التأكد من وجود توصيات للكورس
+                if (courseRecommendations.length > 0) {  
+                                      const courseName = courseRecommendations[0].course_name;
+
+                    const recommendationsHTML = courseRecommendations.map(course => {
+
+                        return `
+                        <div class="course-card1">
+                            <h3>${course.course_name}</h3>
+                            <p><strong>الجامعة:</strong> ${course.university}</p>
+                            <p><strong>المستوى:</strong> ${course.difficulty_level}</p>
+                            <p><strong>التقييم:</strong> ${course.course_rating}</p>
+                            <p><strong>نسبة التشابه:</strong> %${course.similarity}</p>
+                            <span class="inff" onclick="showMoreInfo(${course.course_id})">عرض المزيد</span>
+                        </div>
+                        `;
+                    }).join("");  // دمج HTML لكل التوصيات
+
+                    // إضافة التوصيات الخاصة بكل كورس إلى الـ container
+                    similarCoursesContainer.innerHTML += `
+                    <div id="similarCourses">
+                        <h2>توصيات للكورس: ${courseName}</h2>
+                        ${recommendationsHTML}
                     </div>
-                `;
-            }).join(""); 
-             // Join the array of HTML strings into one string
-
-            // Insert the HTML into the container
-            similarCoursesContainer.innerHTML = recommendationsHTML;
+                    `;
+                }
+            });
         } else {
-            console.error("No recommendations found");
+            console.error("لم يتم العثور على توصيات.");
+            alert("لا توجد توصيات لهذه الكورسات.");
         }
     })
-    .catch(error => console.error("Error:", error));
+    .catch(error => {
+        console.error("حدث خطأ أثناء جلب البيانات:", error);
+        alert("حدث خطأ أثناء جلب التوصيات.");
+    });
+}
 
-
-
-
-
-
-
-            // Function to show more course information in a new window
-            function showMoreInfo(courseId) {
-                fetch("http://localhost:3000/api/course")
-                    .then(response => response.json())
-                    .then(courses => {
-                        const course = courses.find(c => Number(c.ID) === courseId);
-                        if (course) {
-                            const url = `../html/courseDetails.html?courseId=${courseId}`;
-                            window.open(url, '_blank');
-                        } else {
-                            alert("لم يتم العثور على الدورة!");
-                        }
-                    })
-                    .catch(error => {
-                        console.error("❌ حدث خطأ أثناء جلب بيانات الدورة:", error);
-                        alert("حدث خطأ أثناء جلب بيانات الدورة.");
-                    });
+// دالة لعرض المزيد من المعلومات عن الدورة في نافذة جديدة
+function showMoreInfo(courseId) {
+    fetch("http://localhost:3000/api/course")
+        .then(response => response.json())
+        .then(courses => {
+            const course = courses.find(c => Number(c.ID) === courseId);
+            if (course) {
+                const url = `../html/courseDetails.html?courseId=${courseId}`;
+                window.open(url, '_blank');
+            } else {
+                alert("لم يتم العثور على الدورة!");
             }
-
-
-
-
+        })
+        .catch(error => {
+            console.error("❌ حدث خطأ أثناء جلب بيانات الدورة:", error);
+            alert("حدث خطأ أثناء جلب بيانات الدورة.");
+        });
+}
 
         </script>
+        
         </section>
 
     </main>

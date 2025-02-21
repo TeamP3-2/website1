@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/body.css">
     <link rel="stylesheet" href="../css/style.css">
-
     <link rel="stylesheet" href="../css/ditals.css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
@@ -92,6 +91,7 @@
                                         <p><strong>University:</strong> ${course["university"]}</p>
                                         <p><strong>Level:</strong> ${course["difficulty_level"]}</p>
                                         <p><strong>Rating:</strong> ${course["course_rating"]}</p>
+                                        <p><strong>نسبة التشابه:</strong> %${course.similarity}</p>
                                         <span class="inff" onclick="showMoreInfo(${course['course_id']})">عرض المزيد</span>
                                     </div>
                                     `;
