@@ -34,11 +34,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     if (preferencesForm) {
-        fetch("https://website1-1-uyc5.onrender/api/course")
+        fetch("http://localhost:3000/api/course")
             .then(response => response.json())
             .then(courses => {
-                allCourses = courses; 
-                displayCourses(allCourses); 
+               allCourses = courses;          
+               displayCourses(allCourses); 
             })
             .catch(error => console.error("❌ Error fetching courses:", error));
     }
@@ -87,21 +87,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function searchCourses() {
     let input = document.getElementById("searchInput").value.toLowerCase();
+    let filteredCourses = allCourses.filter(course => 
+        course["Course Name"].toLowerCase().includes(input)
+        );
 
-    fetch("https://website1-1-uyc5.onrender/api/course")
-        .then(response => response.json())
-        .then(courses => {
-            let filteredCourses = courses.filter(course =>
-                course["Course Name"].toLowerCase().includes(input)
-            );
-
-            displayCourses(filteredCourses);  
-        })
-        .catch(error => {
-            console.error("❌ حدث خطأ أثناء البحث في API:", error);
-        });
+    displayCourses(filteredCourses); 
 }
-
 function displayCourses(courses) {
     let clusters = {}; 
     let coursesContainer = document.getElementById("coursesContainer");
@@ -180,7 +171,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (enrolledCourses.length === 0) {
         enrolledCoursesList.innerHTML = "<li>لم تسجل في أي دورة حتى الآن.</li>";
     } else {
-        fetch("https://website1-1-uyc5.onrender/api/course")
+        fetch("http://localhost:3000/api/course")
             .then(response => response.json())
             .then(courses => {
                 console.log("قائمة الكورسات من API:", courses);
@@ -239,7 +230,7 @@ function removeCourse(courseId) {
 function showMoreInfo(courseId) {
     const enrolledCourseIds = JSON.parse(localStorage.getItem("enrolledCourses")) || [];
 
-        fetch("https://website1-1-uyc5.onrender/api/course")
+        fetch("http://localhost:3000/api/course")
             .then(response => response.json())
             .then(courses => {
                 const course = courses.find(courses => Number(courses.ID) === courseId);

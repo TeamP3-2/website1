@@ -93,7 +93,6 @@ a {
 a:hover {
     color: #0056b3; /* لون أغمق عند التحريك */
     text-decoration: underline; /* إضافة خط تحت النص عند التمرير */
-    font-size: 27px; /* تكبير بسيط للخط عند التمرير */
 }
 #similarCourses {
     display: flex;

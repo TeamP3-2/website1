@@ -57,21 +57,21 @@
                <button class="enroll-btn" data-course-id="${course["ID"]}">التسجيل</button>
 
                     `;
-                    document.querySelectorAll(".enroll-btn").forEach(button => {
-            button.addEventListener("click", function() {
-                let courseId = this.getAttribute("data-course-id");
-                let storedCourses = JSON.parse(localStorage.getItem("enrolledCourses")) || [];
 
-                if (!storedCourses.includes(courseId)) {
-                    storedCourses.push(courseId); // إضافة معرف الدورة للمصفوفة
-                    localStorage.setItem("enrolledCourses", JSON.stringify(storedCourses)); // تخزين المصفوفة في localStorage
-                    alert(`تم تسجيلك بالكورس رقم ${courseId}`);
-                } else {
-                    alert("✅ أنت مسجل بالفعل في هذا الكورس!");
-                }
-            });
+    document.querySelectorAll(".enroll-btn").forEach(button => {
+        button.addEventListener("click", function() {
+            let courseId = this.getAttribute("data-course-id");
+            let storedCourses = JSON.parse(localStorage.getItem("enrolledCourses")) || [];
+
+            if (!storedCourses.includes(courseId)) {
+                storedCourses.push(courseId); 
+                localStorage.setItem("enrolledCourses", JSON.stringify(storedCourses)); 
+                alert(`تم تسجيلك بالكورس رقم ${courseId}`);
+            } else {
+                alert("✅ أنت مسجل بالفعل في هذا الكورس!");
+            }
         });
-                    
+    });
                     fetch(`http://localhost:8000/recommendations?course_id=${courseId}`)
                         .then(response => response.json())
                         .then(data => {
@@ -147,6 +147,8 @@
                     alert("حدث خطأ أثناء جلب بيانات الدورة.");
                 });
         }
+       
+
     </script>
 </body>
 

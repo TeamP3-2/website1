@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT ;
+const port = 3000;
 const path = require('path');
 const fs = require('fs'); // استيراد fs لقراءة ملفات النظام
 
