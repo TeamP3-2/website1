@@ -13,18 +13,19 @@ Before you start, you must have:
 
 ### 1️⃣ Download the project
 
-```bash
+bash
 # Clone the repository
-git clone https://github.com/username/repository.git
+```git clone https://github.com/username/repository.git
 
 # Go to the folder
-cd repository
+
+```cd repository
 ```
 
 ### 2️⃣ Install the required packages
 
 ```bash
-npm install
+```npm install
 ```
 
 ### 3️⃣ Run the local server
@@ -36,7 +37,7 @@ npm start + uvicorn server:app --host 127.0.0.1 --port 8080 --reload
 
 ### 4️⃣ Run the site
 Open in the browser:
-http://localhost:3000/
+```http://localhost:3000/
 ```
 
 ## 🔧 Project features
