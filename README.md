@@ -37,8 +37,8 @@ npm start + uvicorn server:app --host 127.0.0.1 --port 8080 --reload
 
 ### 4️⃣ Run the site
 Open in the browser:
-http://localhost:3000/```
-```
+http://localhost:3000/
+
 
 ## 🔧 Project features
 - View the list of courses from the API.
